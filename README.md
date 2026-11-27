@@ -60,7 +60,6 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    flex-wrap: wrap;
     min-height: 55px;
 }
 
@@ -90,12 +89,6 @@ button {
     color: #9b5470;
 }
 
-.footer {
-    margin-top: 30px;
-    color: #c44d7c;
-    font-size: 14px;
-}
-
 #success {
     display: none;
     margin-top: 25px;
@@ -112,6 +105,12 @@ button {
     color: #87405c;
     line-height: 1.8;
     font-size: 17px;
+}
+
+.footer {
+    margin-top: 30px;
+    color: #c44d7c;
+    font-size: 14px;
 }
 
 .floating {
@@ -175,18 +174,21 @@ button {
     </h1>
 
     <div class="buttons">
+
         <button id="yesBtn" onclick="sayYes()">
             Yes, I will! ❤️
         </button>
 
         <button id="noBtn"
-                onmouseenter="moveNo()"
-                ontouchstart="moveNo()">
+                onmouseenter="scheduleMove()"
+                onclick="angryNo()">
             No 🙈
         </button>
+
     </div>
 
     <div id="success">
+
         <h2>Yayyyyy! ❤️🥹</h2>
 
         <p>
@@ -200,6 +202,7 @@ button {
             <br><br>
             Forever starts with you, Kash! 💍🌹
         </p>
+
     </div>
 
     <div class="footer">
@@ -210,10 +213,22 @@ button {
 
 <script>
 
-// Make the NO button run away
+// NO button movement
+let moveTimer;
+
+function scheduleMove() {
+
+    clearTimeout(moveTimer);
+
+    // Give her a short chance to click
+    moveTimer = setTimeout(moveNo, 350);
+}
+
 function moveNo() {
 
     const btn = document.getElementById("noBtn");
+
+    if (btn.style.display === "none") return;
 
     const maxX = window.innerWidth - btn.offsetWidth - 20;
     const maxY = window.innerHeight - btn.offsetHeight - 20;
@@ -226,23 +241,47 @@ function moveNo() {
     btn.style.top = y + "px";
 }
 
+// NO button angry emoji on click
+function angryNo() {
+
+    clearTimeout(moveTimer);
+
+    const btn = document.getElementById("noBtn");
+
+    btn.innerHTML = "😡";
+    btn.disabled = true;
+
+    setTimeout(function() {
+
+        btn.innerHTML = "No 🙈";
+        btn.disabled = false;
+
+    }, 3000);
+}
+
 // YES button celebration
 let celebrationStarted = false;
 
 function sayYes() {
 
     if (celebrationStarted) return;
+
     celebrationStarted = true;
+
+    clearTimeout(moveTimer);
 
     document.getElementById("success").style.display = "block";
 
     document.querySelector(".message").style.display = "none";
+
     document.getElementById("noBtn").style.display = "none";
+
     document.getElementById("yesBtn").style.display = "none";
 
     const emojis = [
         "❤️", "💕", "💖", "🌹",
-        "🌸", "✨", "💗", "💐", "🌷"
+        "🌸", "✨", "💗", "💐",
+        "🌷", "🦋"
     ];
 
     function createHeart() {
@@ -265,17 +304,17 @@ function sayYes() {
 
         document.body.appendChild(item);
 
-        setTimeout(() => {
+        setTimeout(function() {
             item.remove();
         }, duration * 1000);
     }
 
-    // Initial flower and heart shower
+    // Initial celebration
     for (let i = 0; i < 60; i++) {
         setTimeout(createHeart, i * 100);
     }
 
-    // Continuous floating animation
+    // Continuous floating hearts and flowers
     setInterval(createHeart, 250);
 }
 
