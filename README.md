@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A Little Question For Kash ❤️</title>
+<title>For My Dearest Kash ❤️</title>
 
 <style>
 * {
@@ -16,6 +16,7 @@
 
 body {
     min-height: 100vh;
+    min-height: 100dvh;
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #ffe0ec, #ffb6cf, #f9c5e0);
     display: flex;
@@ -23,14 +24,16 @@ body {
     align-items: center;
     overflow: hidden;
     text-align: center;
+    padding: 15px;
 }
 
+/* Main proposal card */
 .card {
-    width: 90%;
+    width: 100%;
     max-width: 480px;
-    padding: 45px 25px;
-    background: rgba(255,255,255,0.88);
-    border-radius: 30px;
+    padding: 40px 25px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 28px;
     box-shadow: 0 15px 45px rgba(180,50,100,0.2);
     position: relative;
     z-index: 2;
@@ -52,7 +55,13 @@ h1 {
     color: #87405c;
     font-size: 17px;
     line-height: 1.8;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+}
+
+.question {
+    color: #d6336c;
+    font-size: 27px;
+    margin: 20px 0 25px;
 }
 
 .buttons {
@@ -60,51 +69,41 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    min-height: 55px;
+    min-height: 60px;
 }
 
 button {
     border: none;
-    padding: 15px 27px;
+    padding: 15px 25px;
     border-radius: 35px;
     font-size: 17px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 #yesBtn {
     background: linear-gradient(135deg, #ff4f91, #e91e63);
     color: white;
     box-shadow: 0 6px 18px #e91e6350;
+    transition: transform 0.3s;
 }
 
 #yesBtn:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 #noBtn {
     background: #f1e5eb;
     color: #9b5470;
+    transition: left 0.18s ease, top 0.18s ease;
 }
 
-#success {
-    display: none;
-    margin-top: 25px;
-    animation: appear 1s ease;
-}
-
-#success h2 {
-    color: #d6336c;
-    font-size: 28px;
-    margin-bottom: 12px;
-}
-
-#success p {
-    color: #87405c;
-    line-height: 1.8;
-    font-size: 17px;
+#noBtn:disabled {
+    opacity: 1;
+    cursor: default;
 }
 
 .footer {
@@ -113,12 +112,33 @@ button {
     font-size: 14px;
 }
 
+/* Success message */
+#success {
+    display: none;
+    margin-top: 25px;
+    animation: appear 1s ease;
+}
+
+#success h2 {
+    color: #d6336c;
+    font-size: 29px;
+    margin-bottom: 15px;
+}
+
+#success p {
+    color: #87405c;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+/* Floating hearts and flowers */
 .floating {
     position: fixed;
     bottom: -60px;
     pointer-events: none;
-    z-index: 5;
+    z-index: 10;
     animation: floatUp linear forwards;
+    user-select: none;
 }
 
 @keyframes heartbeat {
@@ -148,6 +168,43 @@ button {
         transform: translateY(0);
     }
 }
+
+/* Mobile responsive design */
+@media (max-width: 480px) {
+    .card {
+        padding: 32px 18px;
+        border-radius: 24px;
+    }
+
+    .heart {
+        font-size: 55px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .message {
+        font-size: 15px;
+    }
+
+    .question {
+        font-size: 23px;
+    }
+
+    .buttons {
+        gap: 10px;
+    }
+
+    button {
+        padding: 13px 19px;
+        font-size: 15px;
+    }
+
+    .footer {
+        font-size: 12px;
+    }
+}
 </style>
 </head>
 
@@ -169,9 +226,9 @@ button {
         So, I have one little question for you...
     </p>
 
-    <h1 style="font-size:27px;">
+    <h2 class="question">
         Will you marry me? 💍
-    </h1>
+    </h2>
 
     <div class="buttons">
 
@@ -179,9 +236,7 @@ button {
             Yes, I will! ❤️
         </button>
 
-        <button id="noBtn"
-                onmouseenter="scheduleMove()"
-                onclick="angryNo()">
+        <button id="noBtn">
             No 🙈
         </button>
 
@@ -213,53 +268,110 @@ button {
 
 <script>
 
-// NO button movement
-let moveTimer;
+// NO BUTTON SETTINGS
 
-function scheduleMove() {
+const noBtn = document.getElementById("noBtn");
 
-    clearTimeout(moveTimer);
+let angryTimer = null;
+let moveTimer = null;
+let isAngry = false;
 
-    // Give her a short chance to click
-    moveTimer = setTimeout(moveNo, 350);
+// Find a random position completely inside the screen
+function getRandomPosition() {
+
+    const margin = 12;
+
+    const width = noBtn.offsetWidth;
+    const height = noBtn.offsetHeight;
+
+    const screenWidth = document.documentElement.clientWidth;
+    const screenHeight = document.documentElement.clientHeight;
+
+    const maxX = Math.max(margin, screenWidth - width - margin);
+    const maxY = Math.max(margin, screenHeight - height - margin);
+
+    return {
+        x: margin + Math.random() * Math.max(0, maxX - margin),
+        y: margin + Math.random() * Math.max(0, maxY - margin)
+    };
 }
 
+// Move No button
 function moveNo() {
 
-    const btn = document.getElementById("noBtn");
-
-    if (btn.style.display === "none") return;
-
-    const maxX = window.innerWidth - btn.offsetWidth - 20;
-    const maxY = window.innerHeight - btn.offsetHeight - 20;
-
-    const x = 10 + Math.random() * Math.max(0, maxX - 10);
-    const y = 10 + Math.random() * Math.max(0, maxY - 10);
-
-    btn.style.position = "fixed";
-    btn.style.left = x + "px";
-    btn.style.top = y + "px";
-}
-
-// NO button angry emoji on click
-function angryNo() {
+    if (isAngry || celebrationStarted) return;
 
     clearTimeout(moveTimer);
 
-    const btn = document.getElementById("noBtn");
+    const position = getRandomPosition();
 
-    btn.innerHTML = "😡";
-    btn.disabled = true;
-
-    setTimeout(function() {
-
-        btn.innerHTML = "No 🙈";
-        btn.disabled = false;
-
-    }, 3000);
+    noBtn.style.position = "fixed";
+    noBtn.style.left = position.x + "px";
+    noBtn.style.top = position.y + "px";
+    noBtn.style.zIndex = "20";
 }
 
-// YES button celebration
+// Desktop: run away when mouse approaches
+noBtn.addEventListener("pointerenter", function(event) {
+
+    if (event.pointerType === "mouse") {
+        moveNo();
+    }
+
+});
+
+// Mobile: tapping No shows angry emoji
+noBtn.addEventListener("click", function() {
+
+    if (isAngry || celebrationStarted) return;
+
+    angryNo();
+
+});
+
+// Angry emoji for 3 seconds
+function angryNo() {
+
+    if (isAngry || celebrationStarted) return;
+
+    isAngry = true;
+
+    clearTimeout(moveTimer);
+    clearTimeout(angryTimer);
+
+    noBtn.innerHTML = "😡";
+    noBtn.disabled = true;
+
+    angryTimer = setTimeout(function() {
+
+        noBtn.innerHTML = "No 🙈";
+        noBtn.disabled = false;
+        isAngry = false;
+
+        // Move to another safe position after 3 seconds
+        moveNo();
+
+    }, 3000);
+
+}
+
+// Keep No button inside screen when resized
+window.addEventListener("resize", function() {
+
+    if (noBtn.style.position === "fixed") {
+
+        const position = getRandomPosition();
+
+        noBtn.style.left = position.x + "px";
+        noBtn.style.top = position.y + "px";
+
+    }
+
+});
+
+
+// YES BUTTON CELEBRATION
+
 let celebrationStarted = false;
 
 function sayYes() {
@@ -268,23 +380,32 @@ function sayYes() {
 
     celebrationStarted = true;
 
+    clearTimeout(angryTimer);
     clearTimeout(moveTimer);
-
-    document.getElementById("success").style.display = "block";
 
     document.querySelector(".message").style.display = "none";
 
-    document.getElementById("noBtn").style.display = "none";
+    document.querySelector(".question").style.display = "none";
 
-    document.getElementById("yesBtn").style.display = "none";
+    document.querySelector(".buttons").style.display = "none";
 
+    document.getElementById("success").style.display = "block";
+
+    // Floating emoji collection
     const emojis = [
-        "❤️", "💕", "💖", "🌹",
-        "🌸", "✨", "💗", "💐",
-        "🌷", "🦋"
+        "❤️",
+        "💕",
+        "💖",
+        "💗",
+        "🌹",
+        "🌸",
+        "🌷",
+        "💐",
+        "✨",
+        "🦋"
     ];
 
-    function createHeart() {
+    function createFloatingItem() {
 
         const item = document.createElement("div");
 
@@ -293,7 +414,7 @@ function sayYes() {
         item.innerHTML =
             emojis[Math.floor(Math.random() * emojis.length)];
 
-        item.style.left = Math.random() * 100 + "vw";
+        item.style.left = Math.random() * 95 + "vw";
 
         item.style.fontSize =
             (20 + Math.random() * 25) + "px";
@@ -307,15 +428,19 @@ function sayYes() {
         setTimeout(function() {
             item.remove();
         }, duration * 1000);
+
     }
 
-    // Initial celebration
+    // Initial celebration shower
     for (let i = 0; i < 60; i++) {
-        setTimeout(createHeart, i * 100);
+
+        setTimeout(createFloatingItem, i * 100);
+
     }
 
-    // Continuous floating hearts and flowers
-    setInterval(createHeart, 250);
+    // Continuous hearts, flowers and sparkles
+    setInterval(createFloatingItem, 250);
+
 }
 
 </script>
