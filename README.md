@@ -29,7 +29,7 @@ body {
     width: 90%;
     max-width: 480px;
     padding: 45px 25px;
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.88);
     border-radius: 30px;
     box-shadow: 0 15px 45px rgba(180,50,100,0.2);
     position: relative;
@@ -58,8 +58,10 @@ h1 {
 .buttons {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 15px;
     flex-wrap: wrap;
+    min-height: 55px;
 }
 
 button {
@@ -70,6 +72,7 @@ button {
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
+    white-space: nowrap;
 }
 
 #yesBtn {
@@ -107,13 +110,13 @@ button {
 
 #success p {
     color: #87405c;
-    line-height: 1.7;
+    line-height: 1.8;
     font-size: 17px;
 }
 
 .floating {
     position: fixed;
-    bottom: -50px;
+    bottom: -60px;
     pointer-events: none;
     z-index: 5;
     animation: floatUp linear forwards;
@@ -131,7 +134,7 @@ button {
     }
     15% { opacity: 1; }
     100% {
-        transform: translateY(-110vh) rotate(360deg);
+        transform: translateY(-115vh) rotate(360deg);
         opacity: 0;
     }
 }
@@ -178,17 +181,19 @@ button {
 
         <button id="noBtn"
                 onmouseenter="moveNo()"
-                onclick="moveNo()">
+                ontouchstart="moveNo()">
             No 🙈
         </button>
     </div>
 
     <div id="success">
         <h2>Yayyyyy! ❤️🥹</h2>
+
         <p>
             I knew you would say YES!
             <br><br>
             You are my favourite person.
+            <br>
             If I could choose again,
             I would still choose you.
             ❤️
@@ -205,18 +210,29 @@ button {
 
 <script>
 
+// Make the NO button run away
 function moveNo() {
+
     const btn = document.getElementById("noBtn");
 
     const maxX = window.innerWidth - btn.offsetWidth - 20;
     const maxY = window.innerHeight - btn.offsetHeight - 20;
 
+    const x = 10 + Math.random() * Math.max(0, maxX - 10);
+    const y = 10 + Math.random() * Math.max(0, maxY - 10);
+
     btn.style.position = "fixed";
-    btn.style.left = Math.max(10, Math.random() * maxX) + "px";
-    btn.style.top = Math.max(10, Math.random() * maxY) + "px";
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
 }
 
+// YES button celebration
+let celebrationStarted = false;
+
 function sayYes() {
+
+    if (celebrationStarted) return;
+    celebrationStarted = true;
 
     document.getElementById("success").style.display = "block";
 
@@ -224,31 +240,42 @@ function sayYes() {
     document.getElementById("noBtn").style.display = "none";
     document.getElementById("yesBtn").style.display = "none";
 
-    const emojis = ["❤️", "💕", "💖", "🌹", "🌸", "✨", "💗", "💐"];
+    const emojis = [
+        "❤️", "💕", "💖", "🌹",
+        "🌸", "✨", "💗", "💐", "🌷"
+    ];
 
     function createHeart() {
+
         const item = document.createElement("div");
 
         item.className = "floating";
-        item.innerHTML = emojis[
-            Math.floor(Math.random() * emojis.length)
-        ];
+
+        item.innerHTML =
+            emojis[Math.floor(Math.random() * emojis.length)];
 
         item.style.left = Math.random() * 100 + "vw";
-        item.style.fontSize = (20 + Math.random() * 25) + "px";
+
+        item.style.fontSize =
+            (20 + Math.random() * 25) + "px";
 
         const duration = 3 + Math.random() * 4;
+
         item.style.animationDuration = duration + "s";
 
         document.body.appendChild(item);
 
-        setTimeout(() => item.remove(), duration * 1000);
+        setTimeout(() => {
+            item.remove();
+        }, duration * 1000);
     }
 
+    // Initial flower and heart shower
     for (let i = 0; i < 60; i++) {
         setTimeout(createHeart, i * 100);
     }
 
+    // Continuous floating animation
     setInterval(createHeart, 250);
 }
 
