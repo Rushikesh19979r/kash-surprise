@@ -248,7 +248,7 @@
 
             <div class="main-heart">💖</div>
 
-            <h1>She said YES! 🥹</h1>
+            <h1> YES! 🥹</h1>
 
             <p class="celebration-text">
                 I knew you would say YES! 💍
