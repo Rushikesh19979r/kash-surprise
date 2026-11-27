@@ -2,448 +2,396 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>For My Dearest Kash ❤️</title>
+    <!-- Mobile responsive and zoom enabled -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    <title>A Special Question for Kash ❤️</title>
 
-body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ffe0ec, #ffb6cf, #f9c5e0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    text-align: center;
-    padding: 15px;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-/* Main proposal card */
-.card {
-    width: 100%;
-    max-width: 480px;
-    padding: 40px 25px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 28px;
-    box-shadow: 0 15px 45px rgba(180,50,100,0.2);
-    position: relative;
-    z-index: 2;
-    backdrop-filter: blur(10px);
-}
+        html {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
 
-.heart {
-    font-size: 65px;
-    animation: heartbeat 1.3s infinite;
-}
+        body {
+            margin: 0;
+            padding: 18px 12px;
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #ff758c,
+                #ff7eb3,
+                #ffc3a0
+            );
+        }
 
-h1 {
-    color: #d6336c;
-    font-size: 32px;
-    margin: 18px 0;
-}
+        .card {
+            width: 100%;
+            max-width: 390px;
+            margin: auto;
+            padding: 25px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 22px;
+            box-shadow: 0 12px 35px rgba(120, 0, 50, 0.20);
+            position: relative;
+            z-index: 2;
+        }
 
-.message {
-    color: #87405c;
-    font-size: 17px;
-    line-height: 1.8;
-    margin-bottom: 25px;
-}
+        .main-heart {
+            font-size: 35px;
+            margin-bottom: 8px;
+            animation: heartbeat 1.5s infinite;
+        }
 
-.question {
-    color: #d6336c;
-    font-size: 27px;
-    margin: 20px 0 25px;
-}
+        h1 {
+            color: #e91e63;
+            font-size: clamp(21px, 6vw, 27px);
+            margin: 8px 0 12px;
+        }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    min-height: 60px;
-}
+        p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
 
-button {
-    border: none;
-    padding: 15px 25px;
-    border-radius: 35px;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
+        .question {
+            color: #d81b60;
+            font-size: clamp(18px, 5vw, 22px);
+            font-weight: bold;
+            margin: 22px 0 15px;
+        }
 
-#yesBtn {
-    background: linear-gradient(135deg, #ff4f91, #e91e63);
-    color: white;
-    box-shadow: 0 6px 18px #e91e6350;
-    transition: transform 0.3s;
-}
+        .buttons-area {
+            width: 100%;
+            max-width: 290px;
+            height: 85px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-#yesBtn:hover {
-    transform: scale(1.08);
-}
+        button {
+            border: none;
+            border-radius: 30px;
+            padding: 11px 23px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-#noBtn {
-    background: #f1e5eb;
-    color: #9b5470;
-    transition: left 0.18s ease, top 0.18s ease;
-}
+        #yesBtn {
+            color: white;
+            background: #e91e63;
+            box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+            position: relative;
+            z-index: 2;
+        }
 
-#noBtn:disabled {
-    opacity: 1;
-    cursor: default;
-}
+        #yesBtn:active {
+            transform: scale(0.96);
+        }
 
-.footer {
-    margin-top: 30px;
-    color: #c44d7c;
-    font-size: 14px;
-}
+        #noBtn {
+            color: #e91e63;
+            background: #ffe0eb;
+            position: absolute;
+            left: 175px;
+            top: 0;
+            white-space: nowrap;
+            transition: left 0.22s ease, top 0.22s ease;
+            z-index: 3;
+        }
 
-/* Success message */
-#success {
-    display: none;
-    margin-top: 25px;
-    animation: appear 1s ease;
-}
+        #celebration {
+            display: none;
+            animation: appear 0.7s ease;
+        }
 
-#success h2 {
-    color: #d6336c;
-    font-size: 29px;
-    margin-bottom: 15px;
-}
+        #celebration h1 {
+            font-size: clamp(22px, 6vw, 28px);
+        }
 
-#success p {
-    color: #87405c;
-    line-height: 1.8;
-    font-size: 17px;
-}
+        .celebration-text {
+            color: #d81b60;
+            font-size: 16px;
+            line-height: 1.8;
+        }
 
-/* Floating hearts and flowers */
-.floating {
-    position: fixed;
-    bottom: -60px;
-    pointer-events: none;
-    z-index: 10;
-    animation: floatUp linear forwards;
-    user-select: none;
-}
+        .floating {
+            position: fixed;
+            top: -40px;
+            pointer-events: none;
+            z-index: 10;
+            animation: fall linear forwards;
+        }
 
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
-@keyframes floatUp {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
-    15% { opacity: 1; }
-    100% {
-        transform: translateY(-115vh) rotate(360deg);
-        opacity: 0;
-    }
-}
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
 
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-/* Mobile responsive design */
-@media (max-width: 480px) {
-    .card {
-        padding: 32px 18px;
-        border-radius: 24px;
-    }
+        @media (max-width: 480px) {
+            body {
+                padding: 14px 10px;
+            }
 
-    .heart {
-        font-size: 55px;
-    }
+            .card {
+                max-width: 350px;
+                padding: 22px 16px;
+                border-radius: 19px;
+            }
 
-    h1 {
-        font-size: 27px;
-    }
+            .main-heart {
+                font-size: 30px;
+            }
 
-    .message {
-        font-size: 15px;
-    }
+            p {
+                font-size: 14px;
+            }
 
-    .question {
-        font-size: 23px;
-    }
+            .question {
+                margin: 18px 0 12px;
+            }
 
-    .buttons {
-        gap: 10px;
-    }
+            .buttons-area {
+                max-width: 270px;
+                height: 78px;
+            }
 
-    button {
-        padding: 13px 19px;
-        font-size: 15px;
-    }
+            button {
+                padding: 10px 19px;
+                font-size: 14px;
+            }
+        }
 
-    .footer {
-        font-size: 12px;
-    }
-}
-</style>
+        @media (max-height: 550px) {
+            body {
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="card">
+    <div class="card">
 
-    <div class="heart">❤️</div>
+        <div id="proposal">
 
-    <h1>My Dearest Kash!</h1>
+            <div class="main-heart">❤️</div>
 
-    <p class="message">
-        Every love story is beautiful,
-        but ours is my favourite. 🥰
-        <br><br>
-        You make my ordinary days special
-        and my world more beautiful.
-        <br><br>
-        So, I have one little question for you...
-    </p>
+            <h1>My Dearest Kash!</h1>
 
-    <h2 class="question">
-        Will you marry me? 💍
-    </h2>
+            <p>
+                Every love story is beautiful, but ours is my favourite.
+                You make my ordinary days special and my world more beautiful.
+            </p>
 
-    <div class="buttons">
+            <div class="question">
+                Will you marry me? 💍
+            </div>
 
-        <button id="yesBtn" onclick="sayYes()">
-            Yes, I will! ❤️
-        </button>
+            <div class="buttons-area" id="buttonsArea">
+                <button id="yesBtn" onclick="sayYes()">
+                    Yes! ❤️
+                </button>
 
-        <button id="noBtn">
-            No 🙈
-        </button>
+                <button id="noBtn" type="button">
+                    No 🙈
+                </button>
+            </div>
+
+        </div>
+
+        <div id="celebration">
+
+            <div class="main-heart">💖</div>
+
+            <h1>She said YES! 🥹</h1>
+
+            <p class="celebration-text">
+                I knew you would say YES! 💍
+                <br><br>
+
+                You are my favourite person.
+                If I could choose again, I would still choose you.
+                <br><br>
+
+                Forever starts with you, Kash! 🌹❤️
+            </p>
+
+        </div>
 
     </div>
 
-    <div id="success">
+    <script>
+        const noBtn = document.getElementById("noBtn");
+        const buttonsArea = document.getElementById("buttonsArea");
 
-        <h2>Yayyyyy! ❤️🥹</h2>
+        let angryTimer;
+        let hoverTimer;
 
-        <p>
-            I knew you would say YES!
-            <br><br>
-            You are my favourite person.
-            <br>
-            If I could choose again,
-            I would still choose you.
-            ❤️
-            <br><br>
-            Forever starts with you, Kash! 💍🌹
-        </p>
+        function moveNoButton() {
+            const areaWidth = buttonsArea.clientWidth;
+            const areaHeight = buttonsArea.clientHeight;
 
-    </div>
+            const buttonWidth = noBtn.offsetWidth;
+            const buttonHeight = noBtn.offsetHeight;
 
-    <div class="footer">
-        Made with endless love, just for you ❤️
-    </div>
+            const maxX = Math.max(0, areaWidth - buttonWidth);
+            const maxY = Math.max(0, areaHeight - buttonHeight);
 
-</div>
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
 
-<script>
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+        }
 
-// NO BUTTON SETTINGS
+        function showAngry() {
+            clearTimeout(angryTimer);
+            clearTimeout(hoverTimer);
 
-const noBtn = document.getElementById("noBtn");
+            noBtn.textContent = "😡";
 
-let angryTimer = null;
-let moveTimer = null;
-let isAngry = false;
+            angryTimer = setTimeout(() => {
+                noBtn.textContent = "No 🙈";
+                moveNoButton();
+            }, 3000);
+        }
 
-// Find a random position completely inside the screen
-function getRandomPosition() {
+        // Clicking No displays angry emoji for 3 seconds
+        noBtn.addEventListener("click", showAngry);
 
-    const margin = 12;
+        // On desktop, move away after the mouse approaches.
+        // A short delay allows the user to click the button.
+        noBtn.addEventListener("pointerenter", (event) => {
+            if (
+                event.pointerType === "mouse" &&
+                noBtn.textContent !== "😡"
+            ) {
+                clearTimeout(hoverTimer);
 
-    const width = noBtn.offsetWidth;
-    const height = noBtn.offsetHeight;
+                hoverTimer = setTimeout(() => {
+                    if (noBtn.textContent !== "😡") {
+                        moveNoButton();
+                    }
+                }, 600);
+            }
+        });
 
-    const screenWidth = document.documentElement.clientWidth;
-    const screenHeight = document.documentElement.clientHeight;
+        noBtn.addEventListener("pointerdown", () => {
+            clearTimeout(hoverTimer);
+        });
 
-    const maxX = Math.max(margin, screenWidth - width - margin);
-    const maxY = Math.max(margin, screenHeight - height - margin);
+        noBtn.addEventListener("pointerleave", () => {
+            clearTimeout(hoverTimer);
+        });
 
-    return {
-        x: margin + Math.random() * Math.max(0, maxX - margin),
-        y: margin + Math.random() * Math.max(0, maxY - margin)
-    };
-}
+        // Reposition safely when screen size changes
+        window.addEventListener("resize", () => {
+            moveNoButton();
+        });
 
-// Move No button
-function moveNo() {
+        // Initial position
+        window.addEventListener("load", moveNoButton);
 
-    if (isAngry || celebrationStarted) return;
+        // Romantic floating emojis
+        function createFloatingEmoji() {
+            const emojis = [
+                "❤️", "💕", "💖", "💗",
+                "🌹", "🌸", "🌷", "💐",
+                "✨", "🦋"
+            ];
 
-    clearTimeout(moveTimer);
+            const item = document.createElement("div");
 
-    const position = getRandomPosition();
+            item.className = "floating";
 
-    noBtn.style.position = "fixed";
-    noBtn.style.left = position.x + "px";
-    noBtn.style.top = position.y + "px";
-    noBtn.style.zIndex = "20";
-}
+            item.textContent =
+                emojis[Math.floor(Math.random() * emojis.length)];
 
-// Desktop: run away when mouse approaches
-noBtn.addEventListener("pointerenter", function(event) {
+            item.style.left = Math.random() * 100 + "vw";
 
-    if (event.pointerType === "mouse") {
-        moveNo();
-    }
+            item.style.fontSize =
+                (18 + Math.random() * 20) + "px";
 
-});
+            item.style.animationDuration =
+                (3 + Math.random() * 3) + "s";
 
-// Mobile: tapping No shows angry emoji
-noBtn.addEventListener("click", function() {
+            document.body.appendChild(item);
 
-    if (isAngry || celebrationStarted) return;
+            setTimeout(() => {
+                item.remove();
+            }, 6500);
+        }
 
-    angryNo();
+        let celebrationInterval;
 
-});
+        function sayYes() {
+            document.getElementById("proposal").style.display = "none";
 
-// Angry emoji for 3 seconds
-function angryNo() {
+            document.getElementById("celebration").style.display = "block";
 
-    if (isAngry || celebrationStarted) return;
+            clearTimeout(angryTimer);
+            clearTimeout(hoverTimer);
 
-    isAngry = true;
+            noBtn.style.display = "none";
 
-    clearTimeout(moveTimer);
-    clearTimeout(angryTimer);
+            createFloatingEmoji();
 
-    noBtn.innerHTML = "😡";
-    noBtn.disabled = true;
+            celebrationInterval = setInterval(
+                createFloatingEmoji,
+                250
+            );
 
-    angryTimer = setTimeout(function() {
-
-        noBtn.innerHTML = "No 🙈";
-        noBtn.disabled = false;
-        isAngry = false;
-
-        // Move to another safe position after 3 seconds
-        moveNo();
-
-    }, 3000);
-
-}
-
-// Keep No button inside screen when resized
-window.addEventListener("resize", function() {
-
-    if (noBtn.style.position === "fixed") {
-
-        const position = getRandomPosition();
-
-        noBtn.style.left = position.x + "px";
-        noBtn.style.top = position.y + "px";
-
-    }
-
-});
-
-
-// YES BUTTON CELEBRATION
-
-let celebrationStarted = false;
-
-function sayYes() {
-
-    if (celebrationStarted) return;
-
-    celebrationStarted = true;
-
-    clearTimeout(angryTimer);
-    clearTimeout(moveTimer);
-
-    document.querySelector(".message").style.display = "none";
-
-    document.querySelector(".question").style.display = "none";
-
-    document.querySelector(".buttons").style.display = "none";
-
-    document.getElementById("success").style.display = "block";
-
-    // Floating emoji collection
-    const emojis = [
-        "❤️",
-        "💕",
-        "💖",
-        "💗",
-        "🌹",
-        "🌸",
-        "🌷",
-        "💐",
-        "✨",
-        "🦋"
-    ];
-
-    function createFloatingItem() {
-
-        const item = document.createElement("div");
-
-        item.className = "floating";
-
-        item.innerHTML =
-            emojis[Math.floor(Math.random() * emojis.length)];
-
-        item.style.left = Math.random() * 95 + "vw";
-
-        item.style.fontSize =
-            (20 + Math.random() * 25) + "px";
-
-        const duration = 3 + Math.random() * 4;
-
-        item.style.animationDuration = duration + "s";
-
-        document.body.appendChild(item);
-
-        setTimeout(function() {
-            item.remove();
-        }, duration * 1000);
-
-    }
-
-    // Initial celebration shower
-    for (let i = 0; i < 60; i++) {
-
-        setTimeout(createFloatingItem, i * 100);
-
-    }
-
-    // Continuous hearts, flowers and sparkles
-    setInterval(createFloatingItem, 250);
-
-}
-
-</script>
+            // Stop creating new emojis after 30 seconds
+            setTimeout(() => {
+                clearInterval(celebrationInterval);
+            }, 30000);
+        }
+    </script>
 
 </body>
 </html>
